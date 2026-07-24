@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ram Narayan | Vedic Astrologer &amp; Consultant</title>
+<link rel="icon" href="assets/logo-icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo-full.png" alt="ParashaRam" class="brand-logo-full">
+    </a>
+    <nav class="site-nav" id="siteNav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#doubt">Ask a Question</a>
+      <a href="#appointment">Book a Session</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="verse">ऋषिदृष्टिः, दिव्यदिशा</p>
+        <p class="verse-translation">The vision of sages, a divinely guided path</p>
+        <h1>Clarity for life's questions,<br>rooted in Vedic wisdom</h1>
+        <p class="hero-sub">Mr. Ram Narayan is a certified Vedic astrologer helping people find direction through personalised horoscope readings, remedies, and guidance grounded in ancient tradition.</p>
+        <div class="hero-actions">
+          <a href="#doubt" class="btn btn-primary">Ask Your Question</a>
+          <a href="#appointment" class="btn btn-outline">Book an Appointment</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container about-inner">
+      <div class="about-image">
+        <img src="assets/founder.png" alt="Portrait of Mr. Ram Narayan">
+      </div>
+      <div class="about-text">
+        <p class="eyebrow">About the Astrologer</p>
+        <h2>Ram Narayan</h2>
+        <p>With years of dedicated study and practice in Jyotish Shastra, Mr. Ram Narayan has guided hundreds of individuals and families through life's uncertainties &mdash; from career and relationships to health and major life decisions. His approach blends classical Vedic principles with clear, compassionate, practical guidance.</p>
+        <p>Certified in Vedic astrology, he draws on traditional texts and time-tested methods to offer readings that are precise, thoughtful, and grounded &mdash; never generic.</p>
+        <ul class="credentials">
+          <li>Certified Vedic Astrologer</li>
+          <li>Specialist in Horoscope &amp; Compatibility Analysis</li>
+          <li>Muhurta &amp; Auspicious Timing Consultant</li>
+          <li>Remedial &amp; Career Guidance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERSE DIVIDER -->
+  <section class="verse-banner">
+    <div class="container">
+      <p class="verse-large">ज्योतिषं जीवनदीपः</p>
+      <p class="verse-translation">Astrology is the lamp that lights the path of life</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <p class="eyebrow center">What I Offer</p>
+      <h2 class="center">Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Horoscope Analysis</h3>
+          <p>In-depth reading of your birth chart to understand strengths, challenges, and life patterns.</p>
+        </div>
+        <div class="service-card">
+          <h3>Relationship &amp; Compatibility</h3>
+          <p>Guidance on marriage and partnerships through detailed compatibility matching.</p>
+        </div>
+        <div class="service-card">
+          <h3>Career &amp; Finance</h3>
+          <p>Insights into favourable timing and direction for career moves and financial decisions.</p>
+        </div>
+        <div class="service-card">
+          <h3>Muhurta Selection</h3>
+          <p>Identifying auspicious dates and times for weddings, ceremonies, and important beginnings.</p>
+        </div>
+        <div class="service-card">
+          <h3>Remedial Measures</h3>
+          <p>Practical, traditional remedies to ease difficult planetary influences.</p>
+        </div>
+        <div class="service-card">
+          <h3>Ongoing Guidance</h3>
+          <p>Continued consultation for those seeking regular clarity through life's transitions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASK YOUR DOUBT -->
+  <section class="doubt" id="doubt">
+    <div class="container doubt-inner">
+      <p class="eyebrow">Speak Freely</p>
+      <h2>Describe the doubt you have</h2>
+      <p class="section-sub">Whatever is on your mind &mdash; career, relationships, health, or life's direction &mdash; share it here. Mr. Ram Narayan reads every submission personally before your consultation.</p>
+
+      <form class="doubt-form" id="doubtForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="doubtName">Name</label>
+            <input type="text" id="doubtName" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="doubtContact">Email or Phone</label>
+            <input type="text" id="doubtContact" name="contact" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="doubtMessage">What bothers you? <span class="hint">(max 500 words)</span></label>
+          <textarea id="doubtMessage" name="message" rows="8" maxlength="4000" required></textarea>
+          <div class="word-counter"><span id="wordCount">0</span> / 500 words</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit My Question</button>
+        <p class="form-note" id="doubtFormNote"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- APPOINTMENT -->
+  <section class="appointment" id="appointment">
+    <div class="container appointment-inner">
+      <div class="appointment-text">
+        <p class="eyebrow">Consultation</p>
+        <h2>Book an Appointment</h2>
+        <p class="section-sub">Sessions are available in person and online. Share your preferred date and time, and Mr. Ram Narayan's team will confirm your slot.</p>
+      </div>
+      <form class="appointment-form" id="appointmentForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="apptName">Full Name</label>
+            <input type="text" id="apptName" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="apptPhone">Phone Number</label>
+            <input type="tel" id="apptPhone" name="phone" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="apptDate">Preferred Date</label>
+            <input type="date" id="apptDate" name="date" required>
+          </div>
+          <div class="form-field">
+            <label for="apptTime">Preferred Time</label>
+            <input type="time" id="apptTime" name="time" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="apptMode">Consultation Mode</label>
+          <select id="apptMode" name="mode">
+            <option value="in-person">In Person</option>
+            <option value="online">Online (Video Call)</option>
+            <option value="phone">Phone Call</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="apptNotes">Brief Note (optional)</label>
+          <textarea id="apptNotes" name="notes" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Request Appointment</button>
+        <p class="form-note" id="apptFormNote"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner">
+      <div class="contact-info">
+        <p class="eyebrow">Get in Touch</p>
+        <h2>Contact</h2>
+        <ul class="contact-list">
+          <li><span class="label">Phone</span> +91 00000 00000</li>
+          <li><span class="label">Email</span> contact@parasharam.com</li>
+          <li><span class="label">Location</span> Chennai, Tamil Nadu, India</li>
+          <li><span class="label">Hours</span> Mon &ndash; Sat, 10:00 AM &ndash; 6:00 PM</li>
+        </ul>
+      </div>
+      <div class="contact-logo">
+        <img src="assets/logo-full.png" alt="ParashaRam logo">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <img src="assets/logo-icon.png" alt="ParashaRam icon" class="footer-icon">
+    <p>&copy; <span id="year"></span> Ram Narayan &mdash; ParashaRam. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
