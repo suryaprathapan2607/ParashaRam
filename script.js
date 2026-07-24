@@ -40,13 +40,9 @@ doubtMessage.addEventListener('input', () => {
 // ===== n8n webhook configuration =====
 // Replace these with your n8n workflow's "Production URL" (Webhook node).
 // Each workflow should accept a POST with a JSON body and respond 200 on success.
-// NOTE: both webhooks are TEMPORARILY set to their /webhook-test/ URLs while
-// those n8n workflows are being built (so "Listen for test event" can capture
-// sample payloads). Switch back to the /webhook/ production URLs and
-// re-publish each workflow before this goes live.
 const N8N_WEBHOOKS = {
-  doubt: 'https://suryaprathapan2607.n8n-wsk.com/webhook-test/eea2d3f9-3701-4b63-a316-46462ea63e30',
-  appointment: 'https://suryaprathapan2607.n8n-wsk.com/webhook-test/fb9e6f8e-df9d-4a0a-bd6a-739a0af6f0f9',
+  doubt: 'https://suryaprathapan2607.n8n-wsk.com/webhook/eea2d3f9-3701-4b63-a316-46462ea63e30',
+  appointment: 'https://suryaprathapan2607.n8n-wsk.com/webhook/fb9e6f8e-df9d-4a0a-bd6a-739a0af6f0f9',
 };
 
 function isWebhookConfigured(url) {
