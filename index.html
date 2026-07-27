@@ -21,7 +21,7 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#doubt">Ask a Question</a>
-      <a href="#appointment">Book a Session</a>
+      <a href="appointment.html">Book a Session</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
@@ -42,7 +42,7 @@
         <p class="hero-sub">Mr. Ram Narayan is a certified Vedic astrologer helping people find direction through personalised horoscope readings, remedies, and guidance grounded in ancient tradition.</p>
         <div class="hero-actions">
           <a href="#doubt" class="btn btn-primary">Ask Your Question</a>
-          <a href="#appointment" class="btn btn-outline">Book an Appointment</a>
+          <a href="appointment.html" class="btn btn-outline">Book an Appointment</a>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
   <!-- SERVICES -->
   <section class="services" id="services">
     <div class="container">
-      <p class="eyebrow center">What I Offer</p>
+      <p class="eyebrow center">What is Offered</p>
       <h2 class="center">Services</h2>
       <div class="services-grid">
         <div class="service-card">
@@ -92,8 +92,8 @@
           <p>Guidance on marriage and partnerships through detailed compatibility matching.</p>
         </div>
         <div class="service-card">
-          <h3>Career &amp; Finance</h3>
-          <p>Insights into favourable timing and direction for career moves and financial decisions.</p>
+          <h3>Education, Career, Wealth &amp; Health</h3>
+          <p>Insights into favourable timing and direction for education, career moves, financial decisions, and health.</p>
         </div>
         <div class="service-card">
           <h3>Muhurta Selection</h3>
@@ -108,6 +108,7 @@
           <p>Continued consultation for those seeking regular clarity through life's transitions.</p>
         </div>
       </div>
+      <p class="services-disclaimer">Please note: Maarakam will not be read.</p>
     </div>
   </section>
 
@@ -125,8 +126,8 @@
             <input type="text" id="doubtName" name="name" required>
           </div>
           <div class="form-field">
-            <label for="doubtContact">Email or Phone</label>
-            <input type="text" id="doubtContact" name="contact" required>
+            <label for="doubtContact">Email</label>
+            <input type="email" id="doubtContact" name="contact" required>
           </div>
         </div>
         <div class="form-field">
@@ -136,53 +137,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit My Question</button>
         <p class="form-note" id="doubtFormNote"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- APPOINTMENT -->
-  <section class="appointment" id="appointment">
-    <div class="container appointment-inner">
-      <div class="appointment-text">
-        <p class="eyebrow">Consultation</p>
-        <h2>Book an Appointment</h2>
-        <p class="section-sub">Sessions are available in person and online. Share your preferred date and time, and Mr. Ram Narayan's team will confirm your slot.</p>
-      </div>
-      <form class="appointment-form" id="appointmentForm">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="apptName">Full Name</label>
-            <input type="text" id="apptName" name="name" required>
-          </div>
-          <div class="form-field">
-            <label for="apptPhone">Phone Number</label>
-            <input type="tel" id="apptPhone" name="phone" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="apptDate">Preferred Date</label>
-            <input type="date" id="apptDate" name="date" required>
-          </div>
-          <div class="form-field">
-            <label for="apptTime">Preferred Time</label>
-            <input type="time" id="apptTime" name="time" required>
-          </div>
-        </div>
-        <div class="form-field">
-          <label for="apptMode">Consultation Mode</label>
-          <select id="apptMode" name="mode">
-            <option value="in-person">In Person</option>
-            <option value="online">Online (Video Call)</option>
-            <option value="phone">Phone Call</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="apptNotes">Brief Note (optional)</label>
-          <textarea id="apptNotes" name="notes" rows="4"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Request Appointment</button>
-        <p class="form-note" id="apptFormNote"></p>
+        <div class="form-note-actions" id="doubtFormActions"></div>
       </form>
     </div>
   </section>

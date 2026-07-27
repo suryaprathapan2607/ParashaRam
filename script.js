@@ -14,7 +14,7 @@ siteNav.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Word counter for the doubt textarea (500 word max)
+// Word counter for the doubt textarea (500 word max) — only present on index.html
 const doubtMessage = document.getElementById('doubtMessage');
 const wordCount = document.getElementById('wordCount');
 const WORD_LIMIT = 500;
@@ -24,22 +24,65 @@ function countWords(text) {
   return trimmed === '' ? 0 : trimmed.split(/\s+/).length;
 }
 
-doubtMessage.addEventListener('input', () => {
-  const words = doubtMessage.value.trim() === '' ? [] : doubtMessage.value.trim().split(/\s+/);
-  let count = words.length;
+if (doubtMessage && wordCount) {
+  doubtMessage.addEventListener('input', () => {
+    const words = doubtMessage.value.trim() === '' ? [] : doubtMessage.value.trim().split(/\s+/);
+    let count = words.length;
 
-  if (count > WORD_LIMIT) {
-    doubtMessage.value = words.slice(0, WORD_LIMIT).join(' ');
-    count = WORD_LIMIT;
-  }
+    if (count > WORD_LIMIT) {
+      doubtMessage.value = words.slice(0, WORD_LIMIT).join(' ');
+      count = WORD_LIMIT;
+    }
 
-  wordCount.textContent = count;
-  wordCount.parentElement.classList.toggle('limit-reached', count >= WORD_LIMIT);
-});
+    wordCount.textContent = count;
+    wordCount.parentElement.classList.toggle('limit-reached', count >= WORD_LIMIT);
+  });
+}
+
+// Appointment scheduling constraints: Monday–Friday, 10:00 AM–5:00 PM —
+// only present on appointment.html
+const apptDateInput = document.getElementById('apptDate');
+const apptDateError = document.getElementById('apptDateError');
+const apptTimeInput = document.getElementById('apptTime');
+const apptTimeError = document.getElementById('apptTimeError');
+const BUSINESS_START = '10:00';
+const BUSINESS_END = '17:00';
+
+function checkApptDate() {
+  if (!apptDateInput.value) return true;
+  const day = new Date(`${apptDateInput.value}T00:00:00`).getDay(); // 0=Sun..6=Sat
+  const isWeekday = day >= 1 && day <= 5;
+  apptDateError.textContent = isWeekday ? '' : 'Appointments are only available Monday to Friday.';
+  return isWeekday;
+}
+
+function checkApptTime() {
+  if (!apptTimeInput.value) return true;
+  const inRange = apptTimeInput.value >= BUSINESS_START && apptTimeInput.value <= BUSINESS_END;
+  apptTimeError.textContent = inRange ? '' : 'Appointments are only available between 10:00 AM and 5:00 PM.';
+  return inRange;
+}
+
+if (apptDateInput && apptDateError) {
+  apptDateInput.addEventListener('change', checkApptDate);
+}
+if (apptTimeInput && apptTimeError) {
+  apptTimeInput.addEventListener('change', checkApptTime);
+}
+
+function validateAppointmentSchedule() {
+  const dateOk = checkApptDate();
+  const timeOk = checkApptTime();
+  return dateOk && timeOk;
+}
 
 // ===== n8n webhook configuration =====
 // Replace these with your n8n workflow's "Production URL" (Webhook node).
 // Each workflow should accept a POST with a JSON body and respond 200 on success.
+// NOTE: appointment webhook is TEMPORARILY set to its /webhook-test/ URL so
+// the updated field set (including the new email field) can be captured in
+// n8n. Switch back to the /webhook/ production URL and re-publish before
+// this goes live.
 const N8N_WEBHOOKS = {
   doubt: 'https://suryaprathapan2607.n8n-wsk.com/webhook/eea2d3f9-3701-4b63-a316-46462ea63e30',
   appointment: 'https://suryaprathapan2607.n8n-wsk.com/webhook/fb9e6f8e-df9d-4a0a-bd6a-739a0af6f0f9',
@@ -70,13 +113,23 @@ async function submitToWebhook(url, payload) {
 // getResultMessage: optional (responseData) => custom message to show instead
 //   of successMessage, based on what the n8n workflow sent back (e.g. a
 //   { status: "unavailable" } response for a taken appointment slot)
-function handleFormSubmit(formId, noteId, { webhookUrl, buildPayload, successMessage, getResultMessage }) {
+// onReset: optional () => extra cleanup after a successful submit (e.g.
+//   resetting the doubt form's word counter)
+// validate: optional () => boolean — return false to block submission
+//   (the validator is responsible for showing its own error messages)
+// onSuccess: optional (responseData) => extra DOM updates after a successful
+//   submit (e.g. showing a "Book Appointment" link when the workflow asks for it)
+function handleFormSubmit(formId, noteId, { webhookUrl, buildPayload, successMessage, getResultMessage, onReset, validate, onSuccess }) {
   const form = document.getElementById(formId);
   const note = document.getElementById(noteId);
+  if (!form || !note) return; // this form isn't on the current page
+
   const submitBtn = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    if (validate && !validate()) return;
 
     const formData = new FormData(form);
     const payload = buildPayload(formData);
@@ -85,7 +138,7 @@ function handleFormSubmit(formId, noteId, { webhookUrl, buildPayload, successMes
       console.warn(`[n8n] No webhook configured for #${formId} — set N8N_WEBHOOKS in script.js. Payload:`, payload);
       note.textContent = successMessage;
       form.reset();
-      wordCount.textContent = '0';
+      if (onReset) onReset();
       return;
     }
 
@@ -99,7 +152,8 @@ function handleFormSubmit(formId, noteId, { webhookUrl, buildPayload, successMes
       const customMessage = getResultMessage && getResultMessage(responseData);
       note.textContent = customMessage || successMessage;
       form.reset();
-      wordCount.textContent = '0';
+      if (onReset) onReset();
+      if (onSuccess) onSuccess(responseData);
     } catch (err) {
       console.error(`[n8n] Submission failed for #${formId}:`, err);
       note.textContent = 'Something went wrong sending this — please try again, or reach out by phone/email.';
@@ -110,9 +164,24 @@ function handleFormSubmit(formId, noteId, { webhookUrl, buildPayload, successMes
   });
 }
 
+const doubtFormActions = document.getElementById('doubtFormActions');
+
 handleFormSubmit('doubtForm', 'doubtFormNote', {
   webhookUrl: N8N_WEBHOOKS.doubt,
   successMessage: 'Thank you. Your question has been received and will be reviewed personally.',
+  onReset: () => { wordCount.textContent = '0'; },
+  getResultMessage: (data) => (data && data.message) || null,
+  onSuccess: (data) => {
+    if (!doubtFormActions) return;
+    doubtFormActions.innerHTML = '';
+    if (data && data.showBookingLink) {
+      const link = document.createElement('a');
+      link.href = 'appointment.html';
+      link.className = 'btn btn-primary';
+      link.textContent = 'Book Appointment';
+      doubtFormActions.appendChild(link);
+    }
+  },
   buildPayload: (formData) => ({
     type: 'doubt',
     name: formData.get('name'),
@@ -127,6 +196,7 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
 handleFormSubmit('appointmentForm', 'apptFormNote', {
   webhookUrl: N8N_WEBHOOKS.appointment,
   successMessage: 'Thank you. Your appointment request has been received — we will confirm your slot shortly.',
+  validate: validateAppointmentSchedule,
   getResultMessage: (data) => {
     // Show whatever message the n8n workflow sends back (from either the
     // "Booking Confirmed" or "Please Choose a Different Slot" Respond node),
@@ -143,10 +213,16 @@ handleFormSubmit('appointmentForm', 'apptFormNote', {
     type: 'appointment',
     name: formData.get('name'),
     phone: formData.get('phone'),
+    email: formData.get('email'),
+    dateOfBirth: formData.get('dateOfBirth'),
+    timeOfBirth: formData.get('timeOfBirth'),
+    cityOfBirth: formData.get('cityOfBirth'),
+    stateOfBirth: formData.get('stateOfBirth'),
+    countryOfBirth: formData.get('countryOfBirth'),
     date: formData.get('date'),
     time: formData.get('time'),
     mode: formData.get('mode'),
-    notes: formData.get('notes'),
+    otherDetails: formData.get('otherDetails'),
     submittedAt: new Date().toISOString(),
     source: window.location.href,
   }),

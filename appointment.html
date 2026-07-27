@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment | Ram Narayan</title>
+<link rel="icon" href="assets/logo-icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-full.png" alt="ParashaRam" class="brand-logo-full">
+    </a>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#doubt">Ask a Question</a>
+      <a href="appointment.html">Book a Session</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- PAGE HEADER -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="verse">ऋषिदृष्टिः, दिव्यदिशा</p>
+        <p class="verse-translation">The vision of sages, a divinely guided path</p>
+        <h1>Book Your Consultation</h1>
+        <p class="hero-sub">Share your birth details and preferred time, and Mr. Ram Narayan will prepare a personalised reading ahead of your session.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHLOKA -->
+  <section class="verse-banner">
+    <div class="container">
+      <p class="verse-large">यो ग्रहाणां प्रसादेन राजते भुवनत्रये।<br>तं देवं शिरसा वन्दे भास्करं तमसां गुरुम्॥</p>
+      <p class="verse-translation">Salutations to that radiant Sun god, who by the grace of the planets shines across the three worlds, and who is the dispeller of darkness.</p>
+    </div>
+  </section>
+
+  <!-- APPOINTMENT -->
+  <section class="appointment" id="appointment">
+    <div class="container appointment-inner-full">
+      <form class="appointment-form" id="appointmentForm">
+        <p class="form-group-label">Your Details</p>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="apptName">Full Name <span class="required-mark">*</span></label>
+            <input type="text" id="apptName" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="apptPhone">Phone Number <span class="required-mark">*</span></label>
+            <input type="tel" id="apptPhone" name="phone" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="apptEmail">Email Address <span class="required-mark">*</span></label>
+          <input type="email" id="apptEmail" name="email" required>
+        </div>
+
+        <p class="form-group-label">Birth Details (for your reading)</p>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="apptDob">Date of Birth</label>
+            <input type="date" id="apptDob" name="dateOfBirth" required>
+          </div>
+          <div class="form-field">
+            <label for="apptTob">Time of Birth</label>
+            <input type="time" id="apptTob" name="timeOfBirth" required>
+          </div>
+        </div>
+        <div class="form-row form-row-3">
+          <div class="form-field">
+            <label for="apptCity">City <span class="required-mark">*</span></label>
+            <input type="text" id="apptCity" name="cityOfBirth" required>
+          </div>
+          <div class="form-field">
+            <label for="apptState">State <span class="required-mark">*</span></label>
+            <input type="text" id="apptState" name="stateOfBirth" required>
+          </div>
+          <div class="form-field">
+            <label for="apptCountry">Country <span class="required-mark">*</span></label>
+            <input type="text" id="apptCountry" name="countryOfBirth" required>
+          </div>
+        </div>
+
+        <p class="form-group-label">Consultation Preferences</p>
+        <p class="section-sub" style="margin-bottom: 0;">All consultations are conducted online via video call.</p>
+        <input type="hidden" name="mode" value="online">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="apptDate">Preferred Date <span class="hint">(Monday to Friday)</span></label>
+            <input type="date" id="apptDate" name="date" required>
+            <p class="field-error" id="apptDateError"></p>
+          </div>
+          <div class="form-field">
+            <label for="apptTime">Preferred Time <span class="hint">(10:00 AM to 5:00 PM)</span></label>
+            <input type="time" id="apptTime" name="time" min="10:00" max="17:00" required>
+            <p class="field-error" id="apptTimeError"></p>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="apptNotes">Other relevant details <span class="hint">(optional)</span></label>
+          <textarea id="apptNotes" name="otherDetails" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Request Appointment</button>
+        <p class="form-note" id="apptFormNote"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <img src="assets/logo-icon.png" alt="ParashaRam icon" class="footer-icon">
+    <p>&copy; <span id="year"></span> Ram Narayan &mdash; ParashaRam. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

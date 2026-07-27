@@ -177,15 +177,17 @@ a { color: inherit; text-decoration: none; }
 
 .verse {
   font-family: var(--font-sanskrit);
-  font-size: 1.6rem;
-  color: var(--gold);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--brown-dark);
   margin-bottom: 4px;
 }
 
 .verse-translation {
   font-style: italic;
-  font-size: 0.92rem;
-  color: var(--text-soft);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #E8590C;
   margin-bottom: 26px;
 }
 
@@ -273,6 +275,14 @@ a { color: inherit; text-decoration: none; }
   margin-top: 50px;
 }
 
+.services-disclaimer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+  margin-top: 34px;
+}
+
 .service-card {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -302,10 +312,29 @@ a { color: inherit; text-decoration: none; }
   gap: 22px;
 }
 
+.form-group-label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 500;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.form-group-label:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px;
+}
+
+.form-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .form-field { display: flex; flex-direction: column; gap: 8px; }
@@ -347,10 +376,28 @@ input:focus, textarea:focus, select:focus {
 
 .word-counter.limit-reached { color: #a3452f; }
 
+.required-mark {
+  color: #a3452f;
+  font-weight: 600;
+}
+
+.field-error {
+  font-size: 0.82rem;
+  color: #a3452f;
+  min-height: 1.2em;
+  margin-top: -4px;
+}
+
 .form-note {
   color: var(--brown);
   font-size: 0.9rem;
   min-height: 1.2em;
+  white-space: pre-line;
+  line-height: 1.7;
+}
+
+.form-note-actions:not(:empty) {
+  margin-top: 6px;
 }
 
 /* ===== Appointment ===== */
@@ -363,6 +410,11 @@ input:focus, textarea:focus, select:focus {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 70px;
+}
+
+.appointment-inner-full {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 /* ===== Contact ===== */
