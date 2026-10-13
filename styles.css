@@ -465,7 +465,7 @@ input:focus, textarea:focus, select:focus {
   gap: 16px;
 }
 
-.footer-icon { height: 36px; width: auto; opacity: 0.9; }
+.footer-icon { height: 28px; width: auto; opacity: 0.9; }
 
 .footer-inner p {
   color: var(--bg-alt);
