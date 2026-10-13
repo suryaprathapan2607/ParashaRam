@@ -1,2 +1,2 @@
-# ParashaRam
-This repo is created to host the webpage of the ParashaRam an aestrology consultant
+# Parasaram
+This repo is created to host the webpage of the Parasaram an aestrology consultant

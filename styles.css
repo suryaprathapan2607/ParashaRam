@@ -120,7 +120,7 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
 }
 
-.brand-logo-full { height: 44px; width: auto; }
+.brand-logo-full { height: 72px; width: auto; }
 
 .site-nav {
   display: flex;
@@ -465,7 +465,7 @@ input:focus, textarea:focus, select:focus {
   gap: 16px;
 }
 
-.footer-icon { height: 28px; width: auto; opacity: 0.9; }
+.footer-icon { height: 36px; width: auto; opacity: 0.9; }
 
 .footer-inner p {
   color: var(--bg-alt);
