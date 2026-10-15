@@ -15,6 +15,7 @@ import os
 import re
 import smtplib
 import time
+import traceback
 from collections import defaultdict, deque
 from email.message import EmailMessage
 from email.utils import formataddr, make_msgid
@@ -170,6 +171,7 @@ def handle_doubt(environ, start_response, origin):
         send_email(build_doubt_email(data))
     except Exception as exc:  # SMTP/network failure - the site shows its own retry message
         print(f"[doubt] email send failed: {exc!r}", flush=True)
+        traceback.print_exc()  # goes to the PythonAnywhere error log
         return respond(start_response, "502 Bad Gateway", {"message": "Could not send right now."}, origin)
 
     print(f"[doubt] notified {NOTIFY_TO} about submission from {data['contact']}", flush=True)
