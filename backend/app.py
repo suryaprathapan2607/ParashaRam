@@ -37,7 +37,7 @@ load_env()
 SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")
-SMTP_APP_PASSWORD = os.environ.get("SMTP_APP_PASSWORD", "")
+SMTP_APP_PASSWORD = os.environ.get("SMTP_APP_PASSWORD", "").replace(" ", "")  # Google shows it as "xxxx xxxx xxxx xxxx"
 NOTIFY_TO = os.environ.get("NOTIFY_TO", SMTP_USER)
 ALLOWED_ORIGINS = {o.strip() for o in os.environ.get(
     "ALLOWED_ORIGINS", "https://suryaprathapan2607.github.io").split(",") if o.strip()}

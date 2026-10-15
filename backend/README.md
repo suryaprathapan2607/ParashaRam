@@ -34,6 +34,8 @@ python app.py               # http://127.0.0.1:8000
 5. Press the green **Reload** button. Check `https://<username>.pythonanywhere.com/health`; it should show `{"status": "ok"}`.
 6. In `script.js`, set the doubt URL to `https://<username>.pythonanywhere.com/api/doubt`.
 
+**Live instance:** https://suryaparasaram2607.pythonanywhere.com (PythonAnywhere user `SuryaParasaram2607`).
+
 **Updating later:** in a Bash console run `cd ParashaRam && git pull`, then press Reload on the Web tab.
-**Free-tier upkeep:** PythonAnywhere asks you to press "Run until 3 months from today" on the Web tab every 3 months. If you don't, the app stops.
+**Free-tier upkeep:** log in at least once a month and press "Run until 1 month from today" on the Web tab, or the app is disabled. PythonAnywhere emails a reminder a week before.
 **Logs:** Web tab → error log / server log. Each submission prints a `[doubt] ...` line.
