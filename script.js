@@ -56,7 +56,12 @@ if (heroIntro && heroIntroMark && siteHeader) {
 
   window.addEventListener('scroll', requestIntroUpdate, { passive: true });
   window.addEventListener('resize', requestIntroUpdate);
-  mobileQuery.addEventListener('change', requestIntroUpdate);
+  // Older Safari (iOS 13 and below) only supports the deprecated addListener
+  if (mobileQuery.addEventListener) {
+    mobileQuery.addEventListener('change', requestIntroUpdate);
+  } else if (mobileQuery.addListener) {
+    mobileQuery.addListener(requestIntroUpdate);
+  }
   updateIntro();
 }
 
