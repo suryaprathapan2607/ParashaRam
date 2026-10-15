@@ -7,7 +7,7 @@ Endpoints
 Settings come from backend/.env (never committed - see .env.example):
   SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_APP_PASSWORD, NOTIFY_TO, ALLOWED_ORIGINS
 
-Local test:   python app.py            (serves http://127.0.0.1:8000)
+Local test:   python parasaram_api.py            (serves http://127.0.0.1:8000)
 PythonAnywhere: point the web app's WSGI file at `application` in this module.
 """
 import json

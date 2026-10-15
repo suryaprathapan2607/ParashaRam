@@ -12,7 +12,7 @@ Plain-Python (standard library only) backend for the website's forms. It replace
 ```
 cd backend
 copy .env.example .env      # then fill in SMTP_APP_PASSWORD
-python app.py               # http://127.0.0.1:8000
+python parasaram_api.py              # http://127.0.0.1:8000
 ```
 
 ## Deploy on PythonAnywhere (free)
@@ -29,7 +29,7 @@ python app.py               # http://127.0.0.1:8000
    ```python
    import sys
    sys.path.insert(0, "/home/<username>/ParashaRam/backend")
-   from app import application
+   from parasaram_api import application
    ```
 5. Press the green **Reload** button. Check `https://<username>.pythonanywhere.com/health`; it should show `{"status": "ok"}`.
 6. In `script.js`, set the doubt URL to `https://<username>.pythonanywhere.com/api/doubt`.
