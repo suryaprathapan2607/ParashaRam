@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ram Narayanan Sharma | Vedic Astrologer &amp; Consultant</title>
+<title>Ram Narayanan Rao | Vedic Astrologer &amp; Consultant</title>
 <link rel="icon" href="assets/parasaram-icon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,10 +36,18 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-text">
-        <p class="verse">ऋषिदृष्टिः, दिव्यदिशा</p>
-        <p class="verse-translation">The vision of sages, a divinely guided path</p>
-        <h1>Clarity for life's questions,<br>rooted in Vedic wisdom</h1>
-        <p class="hero-sub">Mr. Ram Narayanan Sharma is a certified Vedic astrologer helping people find direction through personalised horoscope readings, remedies, and guidance grounded in ancient tradition.</p>
+        <!-- On phones this block fills the first screen with a large logo,
+             which hands off to the header logo on scroll (see script.js) -->
+        <div class="hero-intro" id="heroIntro">
+          <div class="hero-intro-mark" id="heroIntroMark">
+            <img src="assets/parasaram-header.png" alt="" class="hero-intro-logo">
+          </div>
+          <p class="verse">ऋषिदृष्टिः, दिव्यदिशा</p>
+          <p class="verse-translation">The vision of sages, a divinely guided path</p>
+          <h1>Clarity for life's questions,<br>rooted in Vedic wisdom</h1>
+          <span class="scroll-cue" aria-hidden="true"></span>
+        </div>
+        <p class="hero-sub">Mr. Ram Narayanan Rao is a certified Vedic astrologer helping people find direction through personalised horoscope readings, remedies, and guidance grounded in ancient tradition.</p>
         <div class="hero-actions">
           <a href="#doubt" class="btn btn-primary">Ask Your Question</a>
           <a href="appointment.html" class="btn btn-outline">Book an Appointment</a>
@@ -52,18 +60,19 @@
   <section class="about" id="about">
     <div class="container about-inner">
       <div class="about-image">
-        <img src="assets/founder.png" alt="Portrait of Mr. Ram Narayanan Sharma">
+        <img src="assets/founder.png" alt="Portrait of Mr. Ram Narayanan Rao">
       </div>
       <div class="about-text">
         <p class="eyebrow">About the Astrologer</p>
-        <h2>Ram Narayanan Sharma</h2>
-        <p>With years of dedicated study and practice in Jyotish Shastra, Mr. Ram Narayanan Sharma has guided hundreds of individuals and families through life's uncertainties &mdash; from career and relationships to health and major life decisions. His approach blends classical Vedic principles with clear, compassionate, practical guidance.</p>
-        <p>Certified in Vedic astrology, he draws on traditional texts and time-tested methods to offer readings that are precise, thoughtful, and grounded &mdash; never generic.</p>
+        <h2>Ram Narayanan Rao</h2>
+        <p>With years of dedicated study and practice in Jyotish Shastra, Mr. Ram Narayanan Rao has guided hundreds of individuals and families through life's uncertainties &mdash; from career and relationships to health and major life decisions. His approach blends classical Vedic principles with clear, compassionate, practical guidance.</p>
+        <p>Certified in Vedic astrology, he draws on traditional texts and time-tested methods to offer readings that are thoughtful and grounded &mdash; never generic.</p>
         <ul class="credentials">
           <li>Certified Vedic Astrologer</li>
-          <li>Specialist in Horoscope &amp; Compatibility Analysis</li>
-          <li>Muhurta &amp; Auspicious Timing Consultant</li>
-          <li>Remedial &amp; Career Guidance</li>
+          <li>Specialist in Varga Chakras</li>
+          <li>Marriage Compatibility</li>
+          <li>Guidance on Education, Career, and Health Aspects</li>
+          <li>Prathanas for Dhoshas and Blockades, if any, in Jathakam</li>
         </ul>
       </div>
     </div>
@@ -117,17 +126,31 @@
     <div class="container doubt-inner">
       <p class="eyebrow">Speak Freely</p>
       <h2>Describe the doubt you have</h2>
-      <p class="section-sub">Whatever is on your mind &mdash; career, relationships, health, or life's direction &mdash; share it here. Mr. Ram Narayanan Sharma reads every submission personally before your consultation.</p>
+      <p class="section-sub">Whatever is on your mind &mdash; career, relationships, health, or life's direction &mdash; share it here. Mr. Ram Narayanan Rao reads every submission personally before your consultation.</p>
 
       <form class="doubt-form" id="doubtForm">
         <div class="form-row">
           <div class="form-field">
-            <label for="doubtName">Name</label>
+            <label for="doubtName">Name <span class="required-mark">*</span></label>
             <input type="text" id="doubtName" name="name" required>
           </div>
           <div class="form-field">
-            <label for="doubtContact">Email</label>
+            <label for="doubtContact">Email <span class="required-mark">*</span></label>
             <input type="email" id="doubtContact" name="contact" required>
+          </div>
+        </div>
+        <div class="form-row form-row-3">
+          <div class="form-field">
+            <label for="doubtDob">Date of Birth <span class="required-mark">*</span></label>
+            <input type="date" id="doubtDob" name="dateOfBirth" required>
+          </div>
+          <div class="form-field">
+            <label for="doubtTob">Time of Birth <span class="required-mark">*</span></label>
+            <input type="time" id="doubtTob" name="timeOfBirth" required>
+          </div>
+          <div class="form-field">
+            <label for="doubtPob">Place of Birth <span class="required-mark">*</span></label>
+            <input type="text" id="doubtPob" name="placeOfBirth" placeholder="City, State, Country" required>
           </div>
         </div>
         <div class="form-field">
@@ -166,7 +189,7 @@
 <footer class="site-footer">
   <div class="container footer-inner">
     <img src="assets/parasaram-icon.png" alt="Parasaram icon" class="footer-icon">
-    <p>&copy; <span id="year"></span> Ram Narayanan Sharma &mdash; Parasaram. All rights reserved.</p>
+    <p>&copy; <span id="year"></span> Ram Narayanan Rao &mdash; Parasaram. All rights reserved.</p>
   </div>
 </footer>
 

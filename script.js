@@ -14,6 +14,52 @@ siteNav.querySelectorAll('a').forEach(link => {
   });
 });
 
+// Mobile intro — only present on index.html. The large hero logo shrinks and
+// fades as the page scrolls; once it passes under the header, the header gets
+// its own logo and background back (CSS keys off body.intro-active).
+const heroIntro = document.getElementById('heroIntro');
+const heroIntroMark = document.getElementById('heroIntroMark');
+const siteHeader = document.querySelector('.site-header');
+
+if (heroIntro && heroIntroMark && siteHeader) {
+  const mobileQuery = window.matchMedia('(max-width: 640px)');
+  let ticking = false;
+
+  function updateIntro() {
+    ticking = false;
+
+    if (!mobileQuery.matches) {
+      document.body.classList.remove('intro-active');
+      heroIntroMark.style.transform = '';
+      heroIntroMark.style.opacity = '';
+      return;
+    }
+
+    document.documentElement.style.setProperty('--header-h', `${siteHeader.offsetHeight}px`);
+
+    const fadeDistance = heroIntroMark.offsetHeight || 1;
+    const progress = Math.min(Math.max(window.scrollY / fadeDistance, 0), 1);
+    heroIntroMark.style.transform = `scale(${1 - progress * 0.4})`;
+    heroIntroMark.style.opacity = String(1 - progress);
+
+    const logoBottom = heroIntroMark.getBoundingClientRect().bottom;
+    const headerBottom = siteHeader.getBoundingClientRect().bottom;
+    document.body.classList.toggle('intro-active', logoBottom > headerBottom && progress < 0.85);
+  }
+
+  function requestIntroUpdate() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateIntro);
+    }
+  }
+
+  window.addEventListener('scroll', requestIntroUpdate, { passive: true });
+  window.addEventListener('resize', requestIntroUpdate);
+  mobileQuery.addEventListener('change', requestIntroUpdate);
+  updateIntro();
+}
+
 // Word counter for the doubt textarea (500 word max) — only present on index.html
 const doubtMessage = document.getElementById('doubtMessage');
 const wordCount = document.getElementById('wordCount');
@@ -186,6 +232,9 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     type: 'doubt',
     name: formData.get('name'),
     contact: formData.get('contact'),
+    dateOfBirth: formData.get('dateOfBirth'),
+    timeOfBirth: formData.get('timeOfBirth'),
+    placeOfBirth: formData.get('placeOfBirth'),
     message: formData.get('message'),
     wordCount: countWords(formData.get('message') || ''),
     submittedAt: new Date().toISOString(),
