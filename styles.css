@@ -509,9 +509,10 @@ input:focus, textarea:focus, select:focus {
   .verse-large { font-size: 1.9rem; }
 
   /* ===== Mobile intro (index.html) ===== */
-  .site-header,
-  .site-header .brand-logo-full {
-    transition: background-color 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+  /* The header logo swaps in instantly — the large logo has just flown
+     into its exact spot, so a fade would show a flicker */
+  .site-header {
+    transition: background-color 0.35s ease, border-color 0.35s ease;
   }
   body.intro-active .site-header {
     background-color: transparent;
@@ -520,7 +521,7 @@ input:focus, textarea:focus, select:focus {
   }
   body.intro-active .site-header .brand-logo-full { opacity: 0; }
 
-  .hero:has(.hero-intro) { padding-top: 0; }
+  .hero-with-intro { padding-top: 0; }
 
   .hero-intro {
     position: relative;
@@ -537,8 +538,10 @@ input:focus, textarea:focus, select:focus {
   .hero-intro-mark {
     display: block;
     margin-bottom: 34px;
-    transform-origin: center top;
-    will-change: transform, opacity;
+    position: relative;
+    z-index: 101; /* above the sticky header while flying into it */
+    transform-origin: left top;
+    will-change: transform;
   }
   .hero-intro-logo {
     width: min(70vw, 280px);

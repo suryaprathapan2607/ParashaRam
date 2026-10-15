@@ -14,37 +14,69 @@ siteNav.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Mobile intro — only present on index.html. The large hero logo shrinks and
-// fades as the page scrolls; once it passes under the header, the header gets
-// its own logo and background back (CSS keys off body.intro-active).
+// Mobile intro — only present on index.html. While the page is at the top, the
+// header logo is hidden and the large hero logo stands in for it. Scrolling
+// moves and shrinks the large logo into the header logo's exact spot; once it
+// lands, the header logo takes over (CSS keys off body.intro-active).
 const heroIntro = document.getElementById('heroIntro');
 const heroIntroMark = document.getElementById('heroIntroMark');
 const siteHeader = document.querySelector('.site-header');
+const headerLogo = document.querySelector('.site-header .brand-logo-full');
 
-if (heroIntro && heroIntroMark && siteHeader) {
+if (heroIntro && heroIntroMark && siteHeader && headerLogo) {
   const mobileQuery = window.matchMedia('(max-width: 640px)');
   let ticking = false;
+  let geometry = null;
+
+  function resetIntroMark() {
+    heroIntroMark.style.transform = '';
+    heroIntroMark.style.visibility = '';
+  }
+
+  // Untransformed position of the large logo (page coordinates) and the
+  // header logo it flies to (viewport coordinates — the header is sticky).
+  function measureIntro() {
+    resetIntroMark();
+    document.documentElement.style.setProperty('--header-h', `${siteHeader.offsetHeight}px`);
+    const from = heroIntroMark.getBoundingClientRect();
+    const to = headerLogo.getBoundingClientRect();
+    geometry = {
+      left: from.left,
+      top: from.top + window.scrollY,
+      width: from.width || 1,
+      targetLeft: to.left,
+      targetTop: to.top,
+      targetWidth: to.width,
+    };
+  }
 
   function updateIntro() {
     ticking = false;
 
     if (!mobileQuery.matches) {
       document.body.classList.remove('intro-active');
-      heroIntroMark.style.transform = '';
-      heroIntroMark.style.opacity = '';
+      resetIntroMark();
+      geometry = null;
       return;
     }
 
-    document.documentElement.style.setProperty('--header-h', `${siteHeader.offsetHeight}px`);
+    if (!geometry) measureIntro();
+    const g = geometry;
+    const y = window.scrollY;
 
-    const fadeDistance = heroIntroMark.offsetHeight || 1;
-    const progress = Math.min(Math.max(window.scrollY / fadeDistance, 0), 1);
-    heroIntroMark.style.transform = `scale(${1 - progress * 0.4})`;
-    heroIntroMark.style.opacity = String(1 - progress);
+    // The logo rides up with the page while shrinking and sliding left, and
+    // reaches the header spot exactly when its top meets the header logo's top
+    const distance = Math.max(g.top - g.targetTop, 1);
+    const progress = Math.min(Math.max(y / distance, 0), 1);
+    const scale = 1 + (g.targetWidth / g.width - 1) * progress;
+    const dx = (g.targetLeft - g.left) * progress;
+    const dy = (g.targetTop - g.top) * progress + y;
 
-    const logoBottom = heroIntroMark.getBoundingClientRect().bottom;
-    const headerBottom = siteHeader.getBoundingClientRect().bottom;
-    document.body.classList.toggle('intro-active', logoBottom > headerBottom && progress < 0.85);
+    heroIntroMark.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+
+    const landed = progress >= 1;
+    heroIntroMark.style.visibility = landed ? 'hidden' : '';
+    document.body.classList.toggle('intro-active', !landed);
   }
 
   function requestIntroUpdate() {
@@ -54,13 +86,19 @@ if (heroIntro && heroIntroMark && siteHeader) {
     }
   }
 
+  function remeasureIntro() {
+    geometry = null;
+    requestIntroUpdate();
+  }
+
   window.addEventListener('scroll', requestIntroUpdate, { passive: true });
-  window.addEventListener('resize', requestIntroUpdate);
+  window.addEventListener('resize', remeasureIntro);
+  window.addEventListener('load', remeasureIntro);
   // Older Safari (iOS 13 and below) only supports the deprecated addListener
   if (mobileQuery.addEventListener) {
-    mobileQuery.addEventListener('change', requestIntroUpdate);
+    mobileQuery.addEventListener('change', remeasureIntro);
   } else if (mobileQuery.addListener) {
-    mobileQuery.addListener(requestIntroUpdate);
+    mobileQuery.addListener(remeasureIntro);
   }
   updateIntro();
 }
