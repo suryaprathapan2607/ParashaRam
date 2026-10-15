@@ -173,7 +173,7 @@ function validateAppointmentSchedule() {
 // n8n. Switch back to the /webhook/ production URL and re-publish before
 // this goes live.
 const N8N_WEBHOOKS = {
-  doubt: 'https://suryaprathapan2607.n8n-wsk.com/webhook/eea2d3f9-3701-4b63-a316-46462ea63e30',
+  doubt: 'https://suryaparasaram2607.pythonanywhere.com/api/doubt',
   appointment: 'https://suryaprathapan2607.n8n-wsk.com/webhook/fb9e6f8e-df9d-4a0a-bd6a-739a0af6f0f9',
 };
 
