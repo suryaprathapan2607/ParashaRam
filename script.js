@@ -103,6 +103,19 @@ if (heroIntro && heroIntroMark && siteHeader && headerLogo) {
   updateIntro();
 }
 
+// 12-hour time-of-birth picker — fill the hour (01–12) and minute (00–59)
+// dropdowns; the AM/PM options are in the HTML
+function fillTimeOptions(selectId, from, to) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  for (let n = from; n <= to; n++) {
+    const value = String(n).padStart(2, '0');
+    select.add(new Option(value, value));
+  }
+}
+fillTimeOptions('doubtTobHour', 1, 12);
+fillTimeOptions('doubtTobMinute', 0, 59);
+
 // Word counter for the doubt textarea (500 word max) — only present on index.html
 const doubtMessage = document.getElementById('doubtMessage');
 const wordCount = document.getElementById('wordCount');
@@ -239,7 +252,7 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     contact: formData.get('contact'),
     phone: formData.get('phone'),
     dateOfBirth: formData.get('dateOfBirth'),
-    timeOfBirth: formData.get('timeOfBirth'),
+    timeOfBirth: `${formData.get('tobHour')}:${formData.get('tobMinute')} ${formData.get('tobPeriod')}`,
     placeOfBirth: formData.get('placeOfBirth'),
     message: formData.get('message'),
     website: formData.get('website'),

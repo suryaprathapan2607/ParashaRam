@@ -161,8 +161,26 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== Hero ===== */
 .hero {
+  position: relative;
   padding: 90px 0 110px;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+}
+
+/* Faint invocation across the top of the first screen */
+.hero-watermark {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  color: var(--brown-logo);
+  opacity: 0.45;
+  pointer-events: none;
+  user-select: none;
 }
 
 .hero-inner {
@@ -394,6 +412,22 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--gold);
 }
 
+/* 12-hour time picker: hour : minute  AM/PM */
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.time-picker select {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-left: 10px;
+  padding-right: 6px;
+  cursor: pointer;
+}
+.time-picker select:last-child { flex-grow: 1.3; }
+.time-sep { color: var(--text-soft); }
+
 .word-counter {
   text-align: right;
   font-size: 0.82rem;
@@ -584,9 +618,10 @@ input:focus, textarea:focus, select:focus {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 0 70px;
+    padding: 54px 0 70px; /* top room for the watermark */
     margin-bottom: 30px;
   }
+  .hero-watermark { top: 14px; font-size: 1.05rem; }
 
   .hero-intro-mark {
     display: block;

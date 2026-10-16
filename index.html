@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261016g">
+<link rel="stylesheet" href="styles.css?v=20261016h">
 </head>
 <body>
 
@@ -34,6 +34,7 @@
 
   <!-- HERO -->
   <section class="hero hero-with-intro">
+    <p class="hero-watermark">Mahaperiva Charanam</p>
     <div class="container hero-inner">
       <div class="hero-text">
         <!-- On phones this block fills the first screen with a large logo,
@@ -73,7 +74,7 @@
           <li>Specialized in Varga Chakras</li>
           <li>Marriage Compatibility</li>
           <li>Guidance on Education, Career, Wealth and Health Aspects</li>
-          <li>Prathanas for Dhoshas and Blockades, if any, in Jathakam</li>
+          <li>Prarthanas for Dhoshas and Blockades, if any, in Jathakam</li>
         </ul>
       </div>
     </div>
@@ -145,8 +146,22 @@
             <input type="date" id="doubtDob" name="dateOfBirth" required>
           </div>
           <div class="form-field">
-            <label for="doubtTob">Time of Birth <span class="required-mark">*</span> <span class="hint">(Precise Time)</span></label>
-            <input type="time" id="doubtTob" name="timeOfBirth" required>
+            <label for="doubtTobHour">Time of Birth <span class="required-mark">*</span> <span class="hint">(Precise Time)</span></label>
+            <!-- 12-hour picker; the hour/minute options are filled in by script.js -->
+            <div class="time-picker" role="group" aria-label="Time of birth">
+              <select id="doubtTobHour" name="tobHour" aria-label="Hour" required>
+                <option value="">HH</option>
+              </select>
+              <span class="time-sep" aria-hidden="true">:</span>
+              <select id="doubtTobMinute" name="tobMinute" aria-label="Minute" required>
+                <option value="">MM</option>
+              </select>
+              <select id="doubtTobPeriod" name="tobPeriod" aria-label="AM or PM" required>
+                <option value="">AM/PM</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
           </div>
           <div class="form-field">
             <label for="doubtPob">Place of Birth <span class="required-mark">*</span> <span class="hint">(Precise Place of Birth)</span></label>
@@ -208,6 +223,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20261016c"></script>
+<script src="script.js?v=20261016h"></script>
 </body>
 </html>
