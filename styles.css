@@ -8,6 +8,7 @@
   --brown-dark: #3A2A1D;
   --brown: #6B4A32;
   --brown-mid: #8A6242;
+  --brown-logo: #9A5229; /* brown of the Parasaram logo tiles */
   --gold: #B08D4F;
   --gold-soft: #C9A96E;
   --text: #3A2E24;
@@ -282,7 +283,7 @@ a { color: inherit; text-decoration: none; }
 .services-disclaimer {
   text-align: center;
   font-size: 0.85rem;
-  color: var(--text-soft);
+  color: var(--brown-logo);
   font-style: italic;
   margin-top: 34px;
 }
