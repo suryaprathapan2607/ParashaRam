@@ -176,19 +176,19 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
 }
 
-/* "Astrology Consultation" — sits under the logo, framed by short gold rules */
+/* "Astrology Consultation" lettering image — sits under the logo, framed by
+   short gold rules */
 .hero-tagline {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  font-family: var(--font-body);
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--brown-logo);
   margin-bottom: 22px;
+}
+.hero-tagline img {
+  height: 34px;
+  width: auto;
+  min-width: 0;
 }
 .hero-tagline::before,
 .hero-tagline::after {
@@ -572,12 +572,9 @@ input:focus, textarea:focus, select:focus {
     animation: intro-pop 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
   }
 
-  .hero-tagline {
-    font-size: clamp(0.85rem, 4.1vw, 1rem);
-    letter-spacing: 0.14em;
-    gap: 10px;
-    white-space: nowrap;
-  }
+  .hero-tagline { gap: 10px; }
+  /* Scales with the screen so it always fits on one line beside the rules */
+  .hero-tagline img { height: auto; width: min(68vw, 260px); }
   .hero-tagline::before,
   .hero-tagline::after { flex-basis: 18px; }
 
