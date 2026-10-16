@@ -41,12 +41,13 @@ SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_APP_PASSWORD = os.environ.get("SMTP_APP_PASSWORD", "").replace(" ", "")  # Google shows it as "xxxx xxxx xxxx xxxx"
 NOTIFY_TO = os.environ.get("NOTIFY_TO", SMTP_USER)
 ALLOWED_ORIGINS = {o.strip() for o in os.environ.get(
-    "ALLOWED_ORIGINS", "https://suryaprathapan2607.github.io").split(",") if o.strip()}
+    "ALLOWED_ORIGINS", "https://suryaprathapan2607.github.io,https://parasaramastro-creator.github.io").split(",") if o.strip()}
 
 WORD_LIMIT = 500
 MAX_BODY_BYTES = 20_000
 RATE_LIMIT = 5            # submissions per IP ...
 RATE_WINDOW_SECONDS = 600  # ... per 10 minutes
+DAILY_LIMIT = 100          # emails per rolling 24 h across all visitors - keeps a flood from burning the Gmail sending quota
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 # field name in the JSON payload -> (label in the email, max length, required)
@@ -61,6 +62,7 @@ DOUBT_FIELDS = [
 ]
 
 _recent = defaultdict(deque)
+_sent_today = deque()
 
 
 def rate_limited(ip):
@@ -72,6 +74,20 @@ def rate_limited(ip):
         return True
     hits.append(now)
     return False
+
+
+def daily_limit_reached():
+    now = time.time()
+    while _sent_today and now - _sent_today[0] > 86_400:
+        _sent_today.popleft()
+    return len(_sent_today) >= DAILY_LIMIT
+
+
+def client_ip(environ):
+    # X-Real-IP is set by PythonAnywhere's proxy; the first X-Forwarded-For entry is
+    # whatever the caller sent, so only its last entry (added by the proxy) is trusted
+    forwarded = [p.strip() for p in environ.get("HTTP_X_FORWARDED_FOR", "").split(",") if p.strip()]
+    return environ.get("HTTP_X_REAL_IP") or (forwarded[-1] if forwarded else "") or environ.get("REMOTE_ADDR", "")
 
 
 def clean(value, max_len):
@@ -160,8 +176,11 @@ def handle_doubt(environ, start_response, origin):
     except (ValueError, UnicodeDecodeError):
         return respond(start_response, "400 Bad Request", {"message": "Invalid submission."}, origin)
 
-    ip = (environ.get("HTTP_X_FORWARDED_FOR") or environ.get("REMOTE_ADDR") or "").split(",")[0].strip()
-    if rate_limited(ip):
+    if payload.get("website"):  # hidden honeypot field - only bots fill it; pretend success, send nothing
+        print("[doubt] honeypot hit, dropped", flush=True)
+        return respond(start_response, "200 OK", {"status": "received", "showBookingLink": True}, origin)
+
+    if rate_limited(client_ip(environ)):
         return respond(start_response, "429 Too Many Requests",
                        {"message": "Too many submissions - please try again in a few minutes."}, origin)
 
@@ -169,8 +188,14 @@ def handle_doubt(environ, start_response, origin):
     if errors:
         return respond(start_response, "400 Bad Request", {"message": " ".join(errors)}, origin)
 
+    if daily_limit_reached():
+        print("[doubt] daily limit reached, submission refused", flush=True)
+        return respond(start_response, "429 Too Many Requests",
+                       {"message": "We are receiving a lot of questions right now - please try again tomorrow or message us on WhatsApp."}, origin)
+
     try:
         send_email(build_doubt_email(data))
+        _sent_today.append(time.time())
     except Exception as exc:  # SMTP/network failure - the site shows its own retry message
         print(f"[doubt] email send failed: {exc!r}", flush=True)
         traceback.print_exc()  # goes to the PythonAnywhere error log

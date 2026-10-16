@@ -161,6 +161,11 @@
         <button type="submit" class="btn btn-primary">Submit My Question</button>
         <p class="form-note" id="doubtFormNote"></p>
         <div class="form-note-actions" id="doubtFormActions"></div>
+        <!-- spam trap: hidden from people, bots fill it in -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="doubtWebsite">Website</label>
+          <input type="text" id="doubtWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
       </form>
     </div>
   </section>
@@ -203,6 +208,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20261016b"></script>
+<script src="script.js?v=20261016c"></script>
 </body>
 </html>

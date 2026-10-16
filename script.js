@@ -242,6 +242,7 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     timeOfBirth: formData.get('timeOfBirth'),
     placeOfBirth: formData.get('placeOfBirth'),
     message: formData.get('message'),
+    website: formData.get('website'),
     wordCount: countWords(formData.get('message') || ''),
     submittedAt: new Date().toISOString(),
     source: window.location.href,
