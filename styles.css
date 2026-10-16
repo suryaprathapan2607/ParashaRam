@@ -538,8 +538,8 @@ input:focus, textarea:focus, select:focus {
   .hero-intro-mark {
     display: block;
     margin-bottom: 34px;
-    position: relative;
-    z-index: 101; /* above the sticky header while flying into it */
+    /* No z-index: it stays below the sticky header, which is transparent
+       during the intro, so the open nav menu covers it */
     transform-origin: left top;
     will-change: transform;
   }
