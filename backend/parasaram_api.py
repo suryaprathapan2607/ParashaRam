@@ -53,6 +53,7 @@ EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 DOUBT_FIELDS = [
     ("name", "Name", 120, True),
     ("contact", "Email", 200, True),
+    ("phone", "Phone", 30, True),
     ("dateOfBirth", "Date of Birth", 20, True),
     ("timeOfBirth", "Time of Birth", 20, True),
     ("placeOfBirth", "Place of Birth", 200, True),
@@ -106,6 +107,7 @@ def build_doubt_email(d):
         "",
         f"Name:            {d['name']}",
         f"Email:           {d['contact']}",
+        f"Phone:           {d['phone']}",
         f"Date of Birth:   {d['dateOfBirth']}",
         f"Time of Birth:   {d['timeOfBirth']}",
         f"Place of Birth:  {d['placeOfBirth']}",

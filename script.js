@@ -275,6 +275,7 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     type: 'doubt',
     name: formData.get('name'),
     contact: formData.get('contact'),
+    phone: formData.get('phone'),
     dateOfBirth: formData.get('dateOfBirth'),
     timeOfBirth: formData.get('timeOfBirth'),
     placeOfBirth: formData.get('placeOfBirth'),
