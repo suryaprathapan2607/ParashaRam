@@ -128,54 +128,14 @@ if (doubtMessage && wordCount) {
   });
 }
 
-// Appointment scheduling constraints: Monday–Friday, 10:00 AM–5:00 PM —
-// only present on appointment.html
-const apptDateInput = document.getElementById('apptDate');
-const apptDateError = document.getElementById('apptDateError');
-const apptTimeInput = document.getElementById('apptTime');
-const apptTimeError = document.getElementById('apptTimeError');
-const BUSINESS_START = '10:00';
-const BUSINESS_END = '17:00';
-
-function checkApptDate() {
-  if (!apptDateInput.value) return true;
-  const day = new Date(`${apptDateInput.value}T00:00:00`).getDay(); // 0=Sun..6=Sat
-  const isWeekday = day >= 1 && day <= 5;
-  apptDateError.textContent = isWeekday ? '' : 'Appointments are only available Monday to Friday.';
-  return isWeekday;
-}
-
-function checkApptTime() {
-  if (!apptTimeInput.value) return true;
-  const inRange = apptTimeInput.value >= BUSINESS_START && apptTimeInput.value <= BUSINESS_END;
-  apptTimeError.textContent = inRange ? '' : 'Appointments are only available between 10:00 AM and 5:00 PM.';
-  return inRange;
-}
-
-if (apptDateInput && apptDateError) {
-  apptDateInput.addEventListener('change', checkApptDate);
-}
-if (apptTimeInput && apptTimeError) {
-  apptTimeInput.addEventListener('change', checkApptTime);
-}
-
-function validateAppointmentSchedule() {
-  const dateOk = checkApptDate();
-  const timeOk = checkApptTime();
-  return dateOk && timeOk;
-}
-
-// ===== n8n webhook configuration =====
-// Replace these with your n8n workflow's "Production URL" (Webhook node).
-// Each workflow should accept a POST with a JSON body and respond 200 on success.
-// NOTE: appointment webhook is TEMPORARILY set to its /webhook-test/ URL so
-// the updated field set (including the new email field) can be captured in
-// n8n. Switch back to the /webhook/ production URL and re-publish before
-// this goes live.
+// ===== Form endpoints =====
+// The book-appointment form is dormant (see branch dormant/book-appointment);
+// consultations are booked over WhatsApp for now.
 const N8N_WEBHOOKS = {
   doubt: 'https://suryaparasaram2607.pythonanywhere.com/api/doubt',
-  appointment: 'https://suryaprathapan2607.n8n-wsk.com/webhook/fb9e6f8e-df9d-4a0a-bd6a-739a0af6f0f9',
 };
+
+const WHATSAPP_BOOKING_URL = 'https://wa.me/919486625264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20consultation%20with%20Ram%20Narayanan%20Rao.';
 
 function isWebhookConfigured(url) {
   return typeof url === 'string' && !url.includes('your-n8n-instance');
@@ -265,9 +225,11 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     doubtFormActions.innerHTML = '';
     if (data && data.showBookingLink) {
       const link = document.createElement('a');
-      link.href = 'appointment.html';
+      link.href = WHATSAPP_BOOKING_URL;
+      link.target = '_blank';
+      link.rel = 'noopener';
       link.className = 'btn btn-primary';
-      link.textContent = 'Book Appointment';
+      link.textContent = 'Book on WhatsApp';
       doubtFormActions.appendChild(link);
     }
   },
@@ -281,41 +243,6 @@ handleFormSubmit('doubtForm', 'doubtFormNote', {
     placeOfBirth: formData.get('placeOfBirth'),
     message: formData.get('message'),
     wordCount: countWords(formData.get('message') || ''),
-    submittedAt: new Date().toISOString(),
-    source: window.location.href,
-  }),
-});
-
-handleFormSubmit('appointmentForm', 'apptFormNote', {
-  webhookUrl: N8N_WEBHOOKS.appointment,
-  successMessage: 'Thank you. Your appointment request has been received — we will confirm your slot shortly.',
-  validate: validateAppointmentSchedule,
-  getResultMessage: (data) => {
-    // Show whatever message the n8n workflow sends back (from either the
-    // "Booking Confirmed" or "Please Choose a Different Slot" Respond node),
-    // falling back to a generic message only if none was provided.
-    if (data && data.message) {
-      return data.message;
-    }
-    if (data && data.status === 'unavailable') {
-      return 'Sorry, that slot is already booked. Please choose a different date or time.';
-    }
-    return null;
-  },
-  buildPayload: (formData) => ({
-    type: 'appointment',
-    name: formData.get('name'),
-    phone: formData.get('phone'),
-    email: formData.get('email'),
-    dateOfBirth: formData.get('dateOfBirth'),
-    timeOfBirth: formData.get('timeOfBirth'),
-    cityOfBirth: formData.get('cityOfBirth'),
-    stateOfBirth: formData.get('stateOfBirth'),
-    countryOfBirth: formData.get('countryOfBirth'),
-    date: formData.get('date'),
-    time: formData.get('time'),
-    mode: formData.get('mode'),
-    otherDetails: formData.get('otherDetails'),
     submittedAt: new Date().toISOString(),
     source: window.location.href,
   }),
